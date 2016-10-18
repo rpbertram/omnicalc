@@ -102,37 +102,37 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.length
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
     @half = @count/2
     @half_int = @half.to_i
 
     @median = @numbers[@half_int]
 
-    @sum = "Replace this string with your answer."
+    @sum = @sorted_numbers.inject(:+)
 
-    @mean = "Replace this string with your answer."
+    @mean = @sum / @sorted_numbers.size
 
     @variance = "Replace this string with your answer."
 
     @standard_deviation = "Replace this string with your answer."
 
-    @most_present_number_count = 0
-    @sorted_numbers.each do |snum|
-      if @sorted_numbers.count(snum) > @most_present_number_count
-        @most_present_number_count = @sorted_numbers.count(snum)
-        @most_present_number = snum
-      end
-    end
-    @mode = @most_present_number
+    # @most_present_number_count = 0
+    # @sorted_numbers.each do |snum|
+    #   if @sorted_numbers.count(snum) > @most_present_number_count
+    #     @most_present_number_count = @sorted_numbers.count(snum)
+    #     @most_present_number = snum
+    #   end
+    # end
+    @mode = "Replace this string with your answer."
 
 
     # ================================================================================
