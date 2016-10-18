@@ -22,7 +22,7 @@ class CalculationsController < ApplicationController
     # end
 
     #approach below fails if there is only 1 word!
-    @character_count_without_spaces = @text.gsub!(/\s+/, "").length
+    @character_count_without_spaces = @text.gsub(/\s+/, "").length
 
     def words(value)
       value.split(/\s+/).length
@@ -53,7 +53,12 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    @months = @years.to_f * 12.0
+    @apr_months = @apr / 12.0
+    @numerator = @principal * @apr_months * ((1.0 + @apr_months)**@months)
+    @denominator = ((1.0+@apr_months)**@months) - 1.0
+
+    @monthly_payment = @numerator / @denominator
 
     # ================================================================================
     # Your code goes above.
@@ -75,12 +80,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = @seconds / 60
+    @hours = @minutes / 60
+    @days = @hours / 24
+    @weeks = @days / 7
+    @years = @weeks / 52
 
     # ================================================================================
     # Your code goes above.
