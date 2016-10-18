@@ -11,13 +11,28 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length()
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    #why doesn't the method below work?
+    #@input_array = @text.split()
+    # @count_spaceless = 0
+    # @input_array.each do |entry|
+    #   @x = entry.length()
+    #   @count_spaceless = @countspaceless + @x.to_i
+    # end
 
-    @word_count = "Replace this string with your answer."
+    #approach below fails if there is only 1 word!
+    @character_count_without_spaces = @text.gsub!(/\s+/, "").length
 
-    @occurrences = "Replace this string with your answer."
+    def words(value)
+      value.split(/\s+/).length
+    end
+    @word_count = words(@text)
+    # alternate approach to get word count?
+    #@word_array = @text.split()
+    #@word_count = @word_array.length
+    @word_array = @text.split()
+    @occurrences = @word_array.count(@special_word)
 
     # ================================================================================
     # Your code goes above.
@@ -92,7 +107,10 @@ class CalculationsController < ApplicationController
 
     @range = "Replace this string with your answer."
 
-    @median = "Replace this string with your answer."
+    @half = @count/2
+    @half_int = @half.to_i
+
+    @median = @numbers[@half_int]
 
     @sum = "Replace this string with your answer."
 
@@ -102,7 +120,15 @@ class CalculationsController < ApplicationController
 
     @standard_deviation = "Replace this string with your answer."
 
-    @mode = "Replace this string with your answer."
+    @most_present_number_count = 0
+    @sorted_numbers.each do |snum|
+      if @sorted_numbers.count(snum) > @most_present_number_count
+        @most_present_number_count = @sorted_numbers.count(snum)
+        @most_present_number = snum
+      end
+    end
+    @mode = @most_present_number
+
 
     # ================================================================================
     # Your code goes above.
