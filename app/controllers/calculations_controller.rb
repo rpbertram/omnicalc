@@ -53,7 +53,7 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @months = @years.to_f * 12.0
+    @months = @years * 12.0
     @apr_months = @apr / 12.0
     @numerator = @principal * @apr_months * ((1.0 + @apr_months)**@months)
     @denominator = ((1.0+@apr_months)**@months) - 1.0
@@ -121,18 +121,19 @@ class CalculationsController < ApplicationController
 
     @mean = @sum / @sorted_numbers.size
 
-    @variance = "Replace this string with your answer."
+    @sumofsq = @sorted_numbers.inject(0){|accum, i| accum +(i-@mean)**2 }
+    @variance = @sumofsq /(@sorted_numbers.length - 1).to_f
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = Math.sqrt(@variance)
 
-    # @most_present_number_count = 0
-    # @sorted_numbers.each do |snum|
-    #   if @sorted_numbers.count(snum) > @most_present_number_count
-    #     @most_present_number_count = @sorted_numbers.count(snum)
-    #     @most_present_number = snum
-    #   end
-    # end
-    @mode = "Replace this string with your answer."
+    @most_present_number_count = 0
+    @sorted_numbers.each do |snum|
+      if @sorted_numbers.count(snum) > @most_present_number_count
+        @most_present_number_count = @sorted_numbers.count(snum)
+        @most_present_number = snum
+      end
+    end
+    @mode = @most_present_number
 
 
     # ================================================================================
