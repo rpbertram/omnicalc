@@ -13,15 +13,6 @@ class CalculationsController < ApplicationController
 
     @character_count_with_spaces = @text.length()
 
-    #why doesn't the method below work?
-    #@input_array = @text.split()
-    # @count_spaceless = 0
-    # @input_array.each do |entry|
-    #   @x = entry.length()
-    #   @count_spaceless = @countspaceless + @x.to_i
-    # end
-
-    #approach below fails if there is only 1 word!
     @character_count_without_spaces = @text.gsub(/\s+/, "").length
 
     def words(value)
@@ -32,7 +23,9 @@ class CalculationsController < ApplicationController
     #@word_array = @text.split()
     #@word_count = @word_array.length
     @word_array = @text.split()
-    @occurrences = @word_array.count(@special_word)
+    @word_array = @word_array.map(&:downcase)
+
+    @occurrences = @word_array.count(@special_word.downcase)
 
     # ================================================================================
     # Your code goes above.
@@ -54,7 +47,7 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
     @months = @years * 12.0
-    @apr_months = @apr / 12.0
+    @apr_months = @apr / 1200.0
     @numerator = @principal * @apr_months * ((1.0 + @apr_months)**@months)
     @denominator = ((1.0+@apr_months)**@months) - 1.0
 
@@ -112,17 +105,15 @@ class CalculationsController < ApplicationController
 
     @range = @maximum - @minimum
 
-    @half = @count/2
-    @half_int = @half.to_i
 
-    @median = @numbers[@half_int]
+    @median = (@sorted_numbers[(@count - 1)/2] + @sorted_numbers[@count / 2]) / 2.0
 
     @sum = @sorted_numbers.inject(:+)
 
     @mean = @sum / @sorted_numbers.size
 
-    @sumofsq = @sorted_numbers.inject(0){|accum, i| accum +(i-@mean)**2 }
-    @variance = @sumofsq /(@sorted_numbers.length - 1).to_f
+    @sumofsq = @sorted_numbers.inject(0){|accum, i| accum + (i-@mean)**2 }
+    @variance = @sumofsq /(@sorted_numbers.length).to_f
 
     @standard_deviation = Math.sqrt(@variance)
 
